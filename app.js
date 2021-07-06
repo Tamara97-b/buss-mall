@@ -1,3 +1,4 @@
+
 Pic.arr = [];
 arrOfName=[];
 arrOfVote=[];
@@ -186,3 +187,22 @@ let myChart = new Chart(ctx, {
     }
 });
 }
+function saveData(){
+    let arrOFData=JSON.stringify(Pic.arr);
+    localStorage.setItem('name: ',arrOFData);
+}
+
+
+
+
+
+function listFrom(){
+let info=localStorage.getItem('name: ')
+let parsedName =JSON.parse(info);
+if (parsedName){
+    Pic.arr = parsedName
+}
+
+}
+saveData();
+listFrom();
