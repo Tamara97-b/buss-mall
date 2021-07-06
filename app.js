@@ -1,6 +1,7 @@
 Pic.arr = [];
 arrOfName=[];
 arrOfVote=[];
+arrOfShown=[];
 function Pic(name, path) {
     this.name = name;
     this.path = path;
@@ -47,56 +48,23 @@ let first;
 let second;
 let third;
 
-let currentImage =[];
-let prevImage = [];
+let arrOfIndex =[];
+
 
 function getImages() {
     first = generateRandom();
     second = generateRandom();
     third = generateRandom();
 
-    while (first === second || first === third || second === third) {
+    while (first === second || first === third || second === third||arrOfIndex.includes(firstImage)||arrOfIndex.includes(secondImage)||arrOfIndex.includes(thirdImage)){
+     
         
         first = generateRandom();
         third = generateRandom();
-        
+        second= generateRandom();
     }
-    // currentImage.push(first,second,third);
+    arrOfIndex=[first,second,third];
     
-    // console.log("current",currentImage);
-
-
-    //     console.log(prevImage.length);
-             
-        
-    //     Array.prototype.push.apply(prevImage, currentImage);
-        
-    //     if(prevImage.length !=3){
-    //             for (var i=0; i<currentImage.length; i++) {
-    //                 console.log("prevImage[i]",prevImage[i]);
-    //                 imageIndex = prevImage.includes(currentImage[i]);
-    //                console.log("imageIndex",imageIndex);
-
-    //                 if(imageIndex ){
-    //                     console.log("YES");
-    //                     console.log("---------------------------");
-    //                     currentImage[i] = generateRandom();
-    //                 } else {
-    //                     console.log("NOOOOOOOOO");
-    //                     console.log("---------------------------");
-
-    //                 }
-    //             }
-            
-    //     }
-        
-    // if(prevImage.length = 9){
-
-    //     prevImage.splice(0, 3); 
-    // }
-    // console.log("********************* ",prevImage.length);
-
-     
 
     firstImage.src = Pic.arr[first].path;
     secondImage.src = Pic.arr[second].path;
@@ -139,12 +107,14 @@ function clicking(event) {
 function list() {
     let ul = document.getElementById('unList');
     for (let i = 0; i < Pic.arr.length; i++) {
-        arrOfVotes.push(Pic.arr[i].votes)
+        arrOfVote.push(Pic.arr[i].votes)
+        arrOfShown.push(Pic.arr[i].shown)
         let listItem = document.createElement('li');
         ul.appendChild(listItem);
         listItem.textContent = `${Pic.arr[i].name} ${Pic.arr[i].votes} votes , seen ${Pic.arr[i].shown}`;
         
     }
+    gittingChart();
     btn.removeEventListener('click', list);
     section.removeEventListener('click', clicking);
 
@@ -156,15 +126,38 @@ function list() {
 function generateRandom() {
     return Math.floor(Math.random() * Pic.arr.length);
 }
+function gittingChart(){
 
-var ctx = document.getElementById('myChart');
-var myChart = new Chart(ctx, {
+let ctx = document.getElementById('myChart');
+let myChart = new Chart(ctx, {
     type: 'bar',
     data: {
         labels: arrOfName,
         datasets: [{
             label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            data: arrOfVote,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+
+
+        },{
+            label: '# of shown',
+            data: arrOfShown,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -192,3 +185,4 @@ var myChart = new Chart(ctx, {
         }
     }
 });
+}
