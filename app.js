@@ -33,7 +33,7 @@ new Pic('unicorn', 'images/unicorn.jpg');
 new Pic('water-can', 'images/water-can.jpg');
 new Pic('wine-glass', 'images/wine-glass.jpg');
 
-
+listFrom();
 let section = document.getElementById('section');
 let firstImage = document.getElementById('firstImage');
 let secondImage = document.getElementById('secondImage');
@@ -56,16 +56,18 @@ function getImages() {
     first = generateRandom();
     second = generateRandom();
     third = generateRandom();
-
-    while (first === second || first === third || second === third||arrOfIndex.includes(firstImage)||arrOfIndex.includes(secondImage)||arrOfIndex.includes(thirdImage)){
+    console.log();
+console.log(arrOfIndex,'begore whie');
+    while (first === second || first === third || second === third||arrOfIndex.includes(first)||arrOfIndex.includes(second)||arrOfIndex.includes(third)){
      
         
         first = generateRandom();
         third = generateRandom();
         second= generateRandom();
+        
     }
     arrOfIndex=[first,second,third];
-    
+    console.log(first,second,third);
 
     firstImage.src = Pic.arr[first].path;
     secondImage.src = Pic.arr[second].path;
@@ -83,7 +85,7 @@ section.addEventListener('click', clicking );
 
 function clicking(event) {
     counter++;
-
+    saveData();
     if (max >= counter) {
         if (event.target.id === 'firstImage') {
             Pic.arr[first].votes++;
@@ -94,6 +96,7 @@ function clicking(event) {
         } else if (event.target.id === 'thirdImage') {
             Pic.arr[third].votes++;
         }
+       
         getImages();
 
     } else {
@@ -204,5 +207,4 @@ if (parsedName){
 }
 
 }
-saveData();
-listFrom();
+
